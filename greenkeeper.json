@@ -1,0 +1,12 @@
+{
+  "groups": {
+    "default": {
+      "packages": [
+        "01-npm/package.json",
+        "02-nodejs/package.json",
+        "03-events/package.json",
+        "04-lists/for-forin/package.json"
+      ]
+    }
+  }
+}
