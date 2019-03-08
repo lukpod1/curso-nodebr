@@ -7,16 +7,20 @@ async function main() {
         .option('-n, --nome [value]', 'Nome do Heroi')
         .option('-p, --poder [value]', 'Poder do Heroi')
         .option('-i, --id [value]', 'Id do Heroi')
-        
+
         .option('-c, --cadastrar', 'Cadastrar um heroi')
         .option('-l, --listar', 'Listar um heroi')
         .option('-r, --remover', 'Remove um heroi pelo id')
         .option('-a, --atualizar [value]', 'Atualizar um heroi pelo id')
         .parse(process.argv)
-    
+
     const heroi = new Heroi(Commander)
-    
+
     try {
+        /**
+         * node index --cadastrar params...
+         * node index -c -n Hulk -p Forca
+         */
         if (Commander.cadastrar) {
             delete heroi.id
 
@@ -26,13 +30,22 @@ async function main() {
                 return;
             }
             console.log('Heroi Cadastrado com sucesso!');
-            
+
         }
+        /**
+         * node index --listar
+         * node index -r
+         * node index -r 1
+         */
         if (Commander.listar) {
             const resultado = await Database.listar()
             console.log(resultado)
             return;
         }
+        /**
+         * node index --remover
+         * node index -r 1
+         */
         if (Commander.remover) {
             const resultado = await Database.remover(heroi.id)
             if (!resultado) {
@@ -41,6 +54,11 @@ async function main() {
             }
             console.log('Heroi removido com sucesso')
         }
+        /**
+         * node index --atualizar
+         * node index -u 1 -n papa
+         * node index -u 1 -n thor -p trovao
+         */
         if (Commander.atualizar) {
             const idParaAtualizar = parseInt(Commander.atualizar)
             // remover todas as chaves que estivere com underfined | null

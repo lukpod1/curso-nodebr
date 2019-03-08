@@ -5,10 +5,10 @@ const {
 
 const database = require('./database')
 
-const DEFAULT_ITEM_CADASTRAR = { 
+const DEFAULT_ITEM_CADASTRAR = {
     nome: 'Flash',
     poder: 'Speed',
-    id: 1 
+    id: 1
 }
 
 const DEFAULT_ITEM_ATUALIZAR = {
@@ -19,21 +19,22 @@ const DEFAULT_ITEM_ATUALIZAR = {
 
 describe('Suite de manipulação de Herios', () => {
     before(async () => {
+        await database.remover();
         await database.cadastrar(DEFAULT_ITEM_CADASTRAR)
         await database.cadastrar(DEFAULT_ITEM_ATUALIZAR)
     })
     it('deve pesquisar um herio, usando arquivos', async () => {
         const expected = DEFAULT_ITEM_CADASTRAR
-        const [resultado] = await database.listar(expected.id)
-        
-        deepEqual(resultado, expected)
+        const resultado = await database.listar(1)
+
+        deepEqual(resultado[0], expected)
     })
     it('deve cadastrar um heroi, usando arquivos', async () => {
         const expected = DEFAULT_ITEM_CADASTRAR
-        const resultado = await database.cadastrar(DEFAULT_ITEM_CADASTRAR)
-        const [actual] = await database.listar(DEFAULT_ITEM_CADASTRAR.id)
+        database.cadastrar(DEFAULT_ITEM_CADASTRAR)
+        const [realResult] = await database.listar(expected.id)
 
-        deepEqual(actual, expected)
+        deepEqual(realResult, expected)
     })
     it('deve remover um heroi por id', async () => {
         const expected = true;
@@ -47,12 +48,12 @@ describe('Suite de manipulação de Herios', () => {
             nome: 'Batman',
             poder: 'Dinheiro'
         }
-        const novoDado = {
-            nome: 'Batman',
-            poder: 'Dinheiro'
-        }
-        await database.atualizar(DEFAULT_ITEM_ATUALIZAR.id, novoDado)
-        const [resultado] = await database.listar(DEFAULT_ITEM_ATUALIZAR.id)
-        deepEqual(resultado, expected)
+        await database.atualizar(expected.id, {
+            nome: expected.nome,
+            poder: expected.poder,
+        });
+
+        const [realResult] = await database.listar(expected.id);
+        deepEqual(realResult, expected);
     })
 })
