@@ -13,7 +13,7 @@ const DEFAULT_ITEM_CADASTRAR = {
 
 const DEFAULT_ITEM_ATUALIZAR = {
     nome: 'Laterna Verde',
-    poder: 'Energia do anel',
+    poder: 'Energia do Anel',
     id: 2
 }
 
@@ -28,7 +28,6 @@ describe('Suite de manipulação de Herios', () => {
         
         deepEqual(resultado, expected)
     })
-
     it('deve cadastrar um heroi, usando arquivos', async () => {
         const expected = DEFAULT_ITEM_CADASTRAR
         const resultado = await database.cadastrar(DEFAULT_ITEM_CADASTRAR)
@@ -36,21 +35,19 @@ describe('Suite de manipulação de Herios', () => {
 
         deepEqual(actual, expected)
     })
-
     it('deve remover um heroi por id', async () => {
         const expected = true;
         const resultado = await database.remover(DEFAULT_ITEM_CADASTRAR.id);
 
         deepEqual(resultado, expected);
     })
-
     it('deve atualizar um heroi por id', async () => {
-        const expected ={
+        const expected = {
             ...DEFAULT_ITEM_ATUALIZAR,
             nome: 'Batman',
             poder: 'Dinheiro'
         }
-        const novoDado ={
+        const novoDado = {
             nome: 'Batman',
             poder: 'Dinheiro'
         }
