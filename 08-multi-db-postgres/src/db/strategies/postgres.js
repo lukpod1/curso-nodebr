@@ -56,6 +56,13 @@ class Postgres extends IDb {
     return this._herois.findAll({where: item, raw: true})
   }
 
+  async update(id, item) {
+    // console.log('item', item)
+    // const r = await this._herois.update(item, { where: {id : id} })
+    // console.log('result', r)
+    return await this._herois.update(item, { where: {id : id} })
+  }
+
   async connect() {
     this._driver = new Sequelize(
       'heroes',
